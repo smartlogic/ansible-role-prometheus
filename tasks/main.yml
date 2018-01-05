@@ -1,0 +1,11 @@
+- import_tasks: prometheus.yml
+  when: action == "full"
+
+- import_tasks: grafana.yml
+  when: action == "full"
+
+- import_tasks: alertmanager.yml
+  when: action == "full"
+
+- import_tasks: node_exporter.yml
+  when: action == "full" or action == "node_exporter"
