@@ -2,6 +2,14 @@
 
 Set up common prometheus configurations
 
+## Install to requirements.yml
+
+```
+- src: git+git@github.com:smartlogic/ansible-role-prometheus
+  name: prometheus
+  version: 0.1.0
+```
+
 ## Requirements
 
 None
@@ -52,7 +60,7 @@ Full setup:
 ```yaml
 - hosts: servers
   roles:
-    - { role: smartlogic.prometheus, action: "full" }
+    - { role: prometheus, action: "full" }
 ```
 
 Node exporter only:
@@ -60,7 +68,7 @@ Node exporter only:
 ```yaml
 - hosts: servers
   roles:
-    - { role: smartlogic.prometheus, action: "node_exporter" }
+    - { role: prometheus, action: "node_exporter" }
 ```
 
 ## License
