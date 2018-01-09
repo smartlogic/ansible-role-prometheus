@@ -22,6 +22,8 @@ None
 - `node_exporter_checksum` - The checksum for the version of node exporter
 - `alertmanager_version` - Which version of alertmanager to download
 - `alertmanager_checksum` - The checksum for the version of alertmanager
+- `redis_exporter_version` - Which version of redis_exporter to download
+- `redis_exporter_checksum` - The checksum for the version of redis_exporter
 - `grafana_ini_file` - The file to use for `grafana.ini`
   - Default: `grafana.ini`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
@@ -69,6 +71,14 @@ Node exporter only:
 - hosts: servers
   roles:
     - { role: prometheus, action: "node_exporter" }
+```
+
+Redis exporter:
+
+```yaml
+- hosts: servers
+  roles:
+    - { role: prometheus, action: "redis_exporter" }
 ```
 
 ## License
