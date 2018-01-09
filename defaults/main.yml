@@ -11,6 +11,12 @@ alertmanager_checksum: ef09b9c9795a7148fd74bb1dcecdd00a4fa25da05a4d2b8517e6ceb5f
 redis_exporter_version: 0.14
 redis_exporter_checksum: ba80d6902a7020ca94156741cb1d6e44480d19bfa753315d5e6b0f099921bce0
 
+postgres_exporter_version: 0.4.1
+postgres_exporter_checksum: 219c2c116cb496d54ddbd23f392a38c3496ab8e7118dfbf8b7c0b21593dedbfd
+postgres_exporter_connection_host: /var/run/postgresql/
+postgres_exporter_connection_ssl_mode: disable
+postgres_exporter_connection_user: prometheus
+
 grafana_ini_file: grafana.ini
 prometheus_config_file: prometheus.yml
 prometheus_alert_file: alertmanager.yml
