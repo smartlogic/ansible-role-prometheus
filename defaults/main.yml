@@ -8,6 +8,9 @@ node_exporter_checksum: 7ffb3773abb71dd2b2119c5f6a7a0dbca0cff34b24b2ced9e01d9897
 alertmanager_version: 0.10.0
 alertmanager_checksum: ef09b9c9795a7148fd74bb1dcecdd00a4fa25da05a4d2b8517e6ceb5f124e1a8
 
+redis_exporter_version: 0.14
+redis_exporter_checksum: ba80d6902a7020ca94156741cb1d6e44480d19bfa753315d5e6b0f099921bce0
+
 grafana_ini_file: grafana.ini
 prometheus_config_file: prometheus.yml
 prometheus_alert_file: alertmanager.yml

@@ -27,3 +27,9 @@
     name: node_exporter
     state: restarted
   become: true
+
+- name: restart redis_exporter
+  service:
+    name: redis_exporter
+    state: restarted
+  become: true
