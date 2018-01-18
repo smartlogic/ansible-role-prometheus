@@ -21,21 +21,3 @@
     state: restarted
   when: alertmanager_enabled == True
   become: true
-
-- name: restart node_exporter
-  service:
-    name: node_exporter
-    state: restarted
-  become: true
-
-- name: restart redis_exporter
-  service:
-    name: redis_exporter
-    state: restarted
-  become: true
-
-- name: restart postgres_exporter
-  service:
-    name: postgres_exporter
-    state: restarted
-  become: true
