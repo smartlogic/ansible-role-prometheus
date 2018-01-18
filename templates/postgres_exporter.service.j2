@@ -3,7 +3,7 @@ Description=Prometheus Postgres Exporter
 After=network-online.target
 
 [Service]
-Environment=DATA_SOURCE_NAME="user={{ postgres_exporter_connection_user }} host={{ postgres_exporter_connection_host }} sslmode={{ postgres_exporter_connection_ssl_mode }}"
+EnvironmentFile=/home/prometheus/postgres_exporter/env
 User=prometheus
 Restart=on-failure
 WorkingDirectory=/home/prometheus/postgres_exporter/{{ postgres_exporter_version }}/postgres_exporter

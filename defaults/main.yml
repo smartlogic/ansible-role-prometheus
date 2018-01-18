@@ -16,6 +16,7 @@ postgres_exporter_checksum: 219c2c116cb496d54ddbd23f392a38c3496ab8e7118dfbf8b7c0
 postgres_exporter_connection_host: /var/run/postgresql/
 postgres_exporter_connection_ssl_mode: disable
 postgres_exporter_connection_user: prometheus
+postgres_exporter_connection_dbname: postgres
 
 grafana_ini_file: grafana.ini
 prometheus_config_file: prometheus.yml
