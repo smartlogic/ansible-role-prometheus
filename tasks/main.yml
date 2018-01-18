@@ -12,3 +12,6 @@
 
 - import_tasks: redis_exporter.yml
   when: action == "redis_exporter"
+
+- import_tasks: postgres_exporter.yml
+  when: action == "postgres_exporter"

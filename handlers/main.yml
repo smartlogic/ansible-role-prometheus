@@ -33,3 +33,9 @@
     name: redis_exporter
     state: restarted
   become: true
+
+- name: restart postgres_exporter
+  service:
+    name: postgres_exporter
+    state: restarted
+  become: true
