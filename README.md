@@ -18,6 +18,8 @@ Set up common prometheus configurations
 * A PostgreSQL user that has full permissions on the database prometheus will be using
 * This assumes a local connection
 
+If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prometheus] and [timescaledb][timescaledb]. [prometheus-postgresql-adapter][prometheus-postgresql-adapter] will also be set up as a service.
+
 ## Role Variables
 
 - `prometheus_version` - Which version of prometheus to download
@@ -82,3 +84,7 @@ MIT
 ## Author Information
 
 SmartLogic. https://smartlogic.io
+
+[prometheus-postgresql-adapter]: https://github.com/timescale/prometheus-postgresql-adapter
+[pg_prometheus]: https://github.com/timescale/pg_prometheus
+[timescaledb]: https://github.com/timescale/timescaledb
