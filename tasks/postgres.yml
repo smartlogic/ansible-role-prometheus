@@ -1,0 +1,102 @@
+---
+
+- name: Install dependencies for timescaledb
+  action: >
+    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  with_items:
+    - cmake
+    - postgresql-server-dev-10
+  become: true
+
+- name: Check if timescaledb is installed
+  shell: test -f /usr/lib/postgresql/10/lib/timescaledb.so
+  ignore_errors: yes
+  register: timescaledb_installed
+  tags: timescaledb
+  changed_when: false
+
+- name: Clone timescaledb repo
+  git:
+    repo: "https://github.com/timescale/timescaledb.git"
+    dest: /opt/timescaledb
+    clone: yes
+  when: timescaledb_installed | failed
+  become: true
+
+- name: Bootstrap timescaledb
+  shell: rm -rf build/ && ./bootstrap
+  args:
+    chdir: /opt/timescaledb
+  when: timescaledb_installed | failed
+  become: true
+
+- name: Make timescaledb
+  make:
+    chdir: /opt/timescaledb/build
+  when: timescaledb_installed | failed
+  become: yes
+
+- name: Make install timescaledb
+  make:
+    chdir: /opt/timescaledb/build
+    target: install
+  when: timescaledb_installed | failed
+  become: yes
+
+- name: Check if pg_prometheus is installed
+  shell: test -f /usr/lib/postgresql/10/lib/pg_prometheus.so
+  ignore_errors: yes
+  register: pg_prometheus_installed
+  tags: pg_prometheus
+  changed_when: false
+
+- name: Clone pg_prometheus repo
+  git:
+    repo: "https://github.com/timescale/pg_prometheus.git"
+    dest: /opt/pg_prometheus
+    clone: yes
+  when: pg_prometheus_installed | failed
+  become: true
+
+- name: Make pg_prometheus
+  make:
+    chdir: /opt/pg_prometheus
+  when: pg_prometheus_installed | failed
+  become: yes
+
+- name: Make install pg_prometheus
+  make:
+    chdir: /opt/pg_prometheus
+    target: install
+  when: pg_prometheus_installed | failed
+  become: yes
+
+- name: "Create adapter folder"
+  file:
+    path: /home/prometheus/prometheus-postgres-adapter
+    state: directory
+    mode: 0700
+  become: yes
+  become_user: prometheus
+
+- name: Copy postgres adapter
+  copy:
+    src: prometheus-postgresql-adapter
+    dest: /home/prometheus/prometheus-postgres-adapter/
+    mode: 0700
+  become: yes
+  become_user: prometheus
+
+- name: Template out the service file
+  template:
+    src: prometheus-postgres-adapter.service.j2
+    dest: /etc/systemd/system/prometheus-postgres-adapter.service
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart prometheus-postgres-adapter
+
+- name: Enable prometheus-postgres-adapter
+  systemd:
+    enabled: yes
+    name: prometheus-postgres-adapter
