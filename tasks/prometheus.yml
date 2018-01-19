@@ -116,6 +116,7 @@
     mode: 0600
   become: true
   become_user: prometheus
+  notify: restart prometheus
   with_items: "{{ prometheus.alert.rules }}"
 
 - name: Create template files
@@ -125,4 +126,5 @@
     mode: 0600
   become: true
   become_user: prometheus
+  notify: restart prometheus
   with_items: "{{ prometheus.alert.templates }}"
