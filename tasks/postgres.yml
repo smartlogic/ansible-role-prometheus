@@ -1,8 +1,7 @@
 ---
 
 - name: Install dependencies for timescaledb
-  action: >
-    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - cmake
     - postgresql-server-dev-10
