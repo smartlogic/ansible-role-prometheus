@@ -21,3 +21,9 @@
     state: restarted
   when: alertmanager_enabled == True
   become: true
+
+- name: restart prometheus-postgres-adapter
+  service:
+    name: prometheus-postgres-adapter
+    state: restarted
+  become: true
