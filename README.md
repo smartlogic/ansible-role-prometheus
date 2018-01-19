@@ -24,8 +24,10 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
 
 - `prometheus_version` - Which version of prometheus to download
 - `prometheus_checksum` - The checksum for the version of prometheus
+- `prometheus_extra_flags` - Variable to place on the command line, after the config file load
 - `alertmanager_version` - Which version of alertmanager to download
 - `alertmanager_checksum` - The checksum for the version of alertmanager
+- `alertmanager_extra_flags` - Variable to place on the command line, after the config file load
 - `grafana_ini_file` - The file to use for `grafana.ini`
   - Default: `grafana.ini`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
