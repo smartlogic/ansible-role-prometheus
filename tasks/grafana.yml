@@ -8,10 +8,27 @@
     url: https://packagecloud.io/gpg.key
     state: present
 
+- name: check grafana_state var
+  assert:
+    that:
+      - grafana_state == "present" or grafana_state == "latest"
+    msg: "grafana_state must be 'present' or 'latest'"
+
 - name: Install grafana
+  when: grafana_state == "present"
   apt:
     name: grafana
     update_cache: yes
+    state: present
+
+- name: Updated grafana
+  when: grafana_state == "latest"
+  apt:
+    name: grafana
+    update_cache: yes
+    state: latest
+  notify:
+    - restart grafana
 
 - name: Install sqlite3
   apt:

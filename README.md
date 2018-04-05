@@ -30,6 +30,8 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
 - `alertmanager_extra_flags` - Variable to place on the command line, after the config file load
 - `grafana_ini_file` - The file to use for `grafana.ini`
   - Default: `grafana.ini`
+- `grafana_state` - The state of the apt package for grafana (present|latest)
+  - Default: `present`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
   - Default: `prometheus.yml`
 - `prometheus_alert_file` - The file to use for `alertmanager.yml`

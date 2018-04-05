@@ -1,11 +1,12 @@
 ---
-prometheus_version: 2.1.0
-prometheus_checksum: f181f619c9a8e0750c1ac940eb00a0881cc50386d896f06f159e9a5b68db60a0
+prometheus_version: 2.2.1
+prometheus_checksum: ec1798dbda1636f49d709c3931078dc17eafef76c480b67751aa09828396cf31
 
-alertmanager_version: 0.13.0
-alertmanager_checksum: fe79ef985c02f67e82684b8ac6a62a1c93a3c297d8b969a639af23548154772a
+alertmanager_version: 0.14.0
+alertmanager_checksum: caddbbbe3ef8545c6cefb32f9a11207ae18dcc788e8d0fb19659d88c58d14b37
 
 grafana_ini_file: grafana.ini
+grafana_state: present
 prometheus_config_file: prometheus.yml
 prometheus_alert_file: alertmanager.yml
 alertmanager_enabled: true
