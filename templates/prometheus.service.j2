@@ -8,7 +8,7 @@ User=prometheus
 Restart=on-failure
 WorkingDirectory=/home/prometheus/{{ prometheus_version }}/prometheus
 ExecStart=/home/prometheus/{{ prometheus_version }}/prometheus/prometheus \
-                                --config.file=/home/prometheus/prometheus.yml
+          --config.file=/home/prometheus/prometheus.yml {{ prometheus_extra_flags }}
 
 [Install]
 WantedBy=multi-user.target

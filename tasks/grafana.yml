@@ -17,6 +17,12 @@
     msg: "grafana_state must be 'present' or 'latest'"
   become: true
 
+- name: check grafana_state var
+  assert:
+    that:
+      - grafana_state == "present" or grafana_state == "latest"
+    msg: "grafana_state must be 'present' or 'latest'"
+
 - name: Install grafana
   when: grafana_state == "present"
   apt:

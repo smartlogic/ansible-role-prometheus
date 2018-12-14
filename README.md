@@ -7,7 +7,7 @@ Set up common prometheus configurations
 ```
 - src: git+git@github.com:smartlogic/ansible-role-prometheus
   name: prometheus
-  version: 0.1.0
+  version: 0.5.0
 ```
 
 ## Requirements
@@ -24,10 +24,14 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
 
 - `prometheus_version` - Which version of prometheus to download
 - `prometheus_checksum` - The checksum for the version of prometheus
+- `prometheus_extra_flags` - Variable to place on the command line, after the config file load
 - `alertmanager_version` - Which version of alertmanager to download
 - `alertmanager_checksum` - The checksum for the version of alertmanager
+- `alertmanager_extra_flags` - Variable to place on the command line, after the config file load
 - `grafana_ini_file` - The file to use for `grafana.ini`
   - Default: `grafana.ini`
+- `grafana_state` - The state of the apt package for grafana (present|latest)
+  - Default: `present`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
   - Default: `prometheus.yml`
 - `prometheus_alert_file` - The file to use for `alertmanager.yml`
