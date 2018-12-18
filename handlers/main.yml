@@ -27,3 +27,9 @@
     name: prometheus-postgres-adapter
     state: restarted
   become: true
+
+- name: restart postgres
+  service:
+    name: postgresql
+    state: restarted
+  become: true

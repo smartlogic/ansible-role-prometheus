@@ -1,10 +1,12 @@
 ---
 
 - name: Install dependencies for timescaledb
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
-    - cmake
-    - postgresql-server-dev-10
+  apt:
+    name:
+      - cmake
+      - postgresql-server-dev-10
+    state: present
+    update_cache: yes
   become: true
 
 - name: Check if timescaledb is installed
@@ -41,6 +43,8 @@
     target: install
   when: timescaledb_installed | failed
   become: yes
+  notify:
+    - restart postgres
 
 - name: Check if pg_prometheus is installed
   shell: test -f /usr/lib/postgresql/10/lib/pg_prometheus.so
@@ -70,19 +74,35 @@
   when: pg_prometheus_installed | failed
   become: yes
 
-- name: "Create adapter folder"
+- name: "Create version folder"
   file:
-    path: /home/prometheus/prometheus-postgres-adapter
+    path: "/home/prometheus/pg_adapter/{{ prometheus_postgres_adapter_version }}"
     state: directory
     mode: 0700
   become: yes
   become_user: prometheus
 
-- name: Copy postgres adapter
-  copy:
-    src: prometheus-postgresql-adapter
-    dest: /home/prometheus/prometheus-postgres-adapter/
-    mode: 0700
+- name: "Download the adapter file"
+  get_url:
+    url: "https://github.com/timescale/prometheus-postgresql-adapter/releases/download/{{ prometheus_postgres_adapter_version }}/prometheus-postgresql-adapter-{{ prometheus_postgres_adapter_version }}-linux-amd64.tar.gz"
+    dest: "/home/prometheus/pg_adapter/{{ prometheus_postgres_adapter_version }}/pg_adapter.tar.gz"
+    mode: 0400
+    checksum: "sha256:{{ prometheus_postgres_adapter_checksum }}"
+  become: yes
+  become_user: prometheus
+
+- name: stat extracted folder
+  stat: path="/home/prometheus/pg_adapter/{{ prometheus_version }}/prometheus-postgres-adapter"
+  register: prometheus_pg_adapter_extracted_folder_stat
+  become: yes
+  become_user: prometheus
+
+- name: "Extract archive"
+  unarchive:
+    src: "/home/prometheus/pg_adapter/{{ prometheus_postgres_adapter_version }}/pg_adapter.tar.gz"
+    dest: "/home/prometheus/pg_adapter/{{ prometheus_postgres_adapter_version }}/"
+    remote_src: yes
+  when: prometheus_pg_adapter_extracted_folder_stat.stat.exists == False
   become: yes
   become_user: prometheus
 
@@ -91,6 +111,7 @@
     src: prometheus-postgres-adapter.service.j2
     dest: /etc/systemd/system/prometheus-postgres-adapter.service
     mode: 0644
+  become: yes
   notify:
     - reload systemd
     - restart prometheus-postgres-adapter
@@ -99,3 +120,4 @@
   systemd:
     enabled: yes
     name: prometheus-postgres-adapter
+  become: yes
