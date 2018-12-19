@@ -1,50 +1,18 @@
 ---
 
-- name: Install dependencies for timescaledb
+- name: setup yarn apt repo
+  apt_repository:
+    repo: "ppa:timescale/timescaledb-ppa"
+    state: present
+  become: true
+
+- name: Install timescaledb
   apt:
     name:
-      - cmake
-      - postgresql-server-dev-10
+      - timescaledb-postgresql-10
     state: present
     update_cache: yes
   become: true
-
-- name: Check if timescaledb is installed
-  shell: test -f /usr/lib/postgresql/10/lib/timescaledb.so
-  ignore_errors: yes
-  register: timescaledb_installed
-  tags: timescaledb
-  changed_when: false
-
-- name: Clone timescaledb repo
-  git:
-    repo: "https://github.com/timescale/timescaledb.git"
-    dest: /opt/timescaledb
-    clone: yes
-  when: timescaledb_installed | failed
-  become: true
-
-- name: Bootstrap timescaledb
-  shell: rm -rf build/ && ./bootstrap
-  args:
-    chdir: /opt/timescaledb
-  when: timescaledb_installed | failed
-  become: true
-
-- name: Make timescaledb
-  make:
-    chdir: /opt/timescaledb/build
-  when: timescaledb_installed | failed
-  become: yes
-
-- name: Make install timescaledb
-  make:
-    chdir: /opt/timescaledb/build
-    target: install
-  when: timescaledb_installed | failed
-  become: yes
-  notify:
-    - restart postgres
 
 - name: Check if pg_prometheus is installed
   shell: test -f /usr/lib/postgresql/10/lib/pg_prometheus.so
@@ -53,26 +21,53 @@
   tags: pg_prometheus
   changed_when: false
 
+- name: Install requirements for pg_prometheus
+  apt:
+    name:
+      - cmake
+      - libpq-dev
+    state: present
+    update_cache: yes
+  become: true
+
 - name: Clone pg_prometheus repo
   git:
     repo: "https://github.com/timescale/pg_prometheus.git"
     dest: /opt/pg_prometheus
     clone: yes
-  when: pg_prometheus_installed | failed
+  when: pg_prometheus_installed is failed
   become: true
 
 - name: Make pg_prometheus
   make:
     chdir: /opt/pg_prometheus
-  when: pg_prometheus_installed | failed
+  when: pg_prometheus_installed is failed
   become: yes
 
 - name: Make install pg_prometheus
   make:
     chdir: /opt/pg_prometheus
     target: install
-  when: pg_prometheus_installed | failed
+  when: pg_prometheus_installed is failed
   become: yes
+
+- name: restart postgres
+  service:
+    name: postgresql
+    state: restarted
+  become: true
+
+- name: set up timescale db extension
+  postgresql_ext:
+    db: "{{ prometheus_postgresql_database }}"
+    name: timescaledb
+  become: true
+
+- name: set up pg_prometheus db extension
+  postgresql_ext:
+    db: "{{ prometheus_postgresql_database }}"
+    name: pg_prometheus
+  become: true
 
 - name: "Create version folder"
   file:

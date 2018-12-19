@@ -19,6 +19,7 @@ alertmanager_extra_flags: ""
 prometheus_postgresql_archive: false
 prometheus_postgresql_database: metrics
 prometheus_postgresql_username: prometheus
+prometheus_postgresql_password: prometheus
 
 prometheus:
   jobs: []

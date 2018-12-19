@@ -1,15 +1,12 @@
 [Unit]
-Description=Prometheus Server
-Documentation=https://prometheus.io/docs/introduction/overview/
+Description=Prometheus PostgreSQL Adapter
 After=network-online.target
 
 [Service]
 User=prometheus
 Restart=on-failure
-WorkingDirectory=/home/prometheus/prometheus-postgres-adapter
 ExecStart=/home/prometheus/pg_adapter/{{ prometheus_postgres_adapter_version }}/prometheus-postgresql-adapter \
-                                -pg.database {{ prometheus_postgresql_database }} \
-                                -pg.user {{ prometheus_postgresql_username }}
+                                -pg.database {{ prometheus_postgresql_database }}
 
 [Install]
 WantedBy=multi-user.target

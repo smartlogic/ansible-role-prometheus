@@ -2,6 +2,7 @@
   user:
     name: prometheus
     comment: "Prometheus"
+  become: true
 
 - name: "Create version folder"
   file:
