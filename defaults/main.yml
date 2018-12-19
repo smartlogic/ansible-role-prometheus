@@ -10,7 +10,7 @@ prometheus_postgres_adapter_checksum: "a3ea162175fb385f993cb1b48a2ca84b569f6a265
 
 grafana_ini_file: grafana.ini
 grafana_state: present
-prometheus_config_file: prometheus.yml
+prometheus_config_file: prometheus.yml.j2
 prometheus_alert_file: alertmanager.yml
 alertmanager_enabled: true
 prometheus_extra_flags: ""
@@ -20,6 +20,7 @@ prometheus_postgresql_archive: false
 prometheus_postgresql_database: metrics
 prometheus_postgresql_username: prometheus
 prometheus_postgresql_password: prometheus
+prometheus_postgresql_adapter_host: localhost
 
 prometheus:
   jobs: []
