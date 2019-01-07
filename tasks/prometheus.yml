@@ -2,6 +2,7 @@
   user:
     name: prometheus
     comment: "Prometheus"
+  become: true
 
 - name: "Create version folder"
   file:
@@ -61,8 +62,8 @@
   become: yes
   become_user: prometheus
 
-- name: Copy prometheus.yml
-  copy:
+- name: Template prometheus.yml
+  template:
     src: "{{ prometheus_config_file }}"
     dest: /home/prometheus/prometheus.yml
     mode: 0600

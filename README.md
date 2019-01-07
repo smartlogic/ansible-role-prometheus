@@ -33,7 +33,7 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
 - `grafana_state` - The state of the apt package for grafana (present|latest)
   - Default: `present`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
-  - Default: `prometheus.yml`
+  - Default: `prometheus.yml.j2`
 - `prometheus_alert_file` - The file to use for `alertmanager.yml`
   - Default: `alertmanager.yml`
 - `alertmanager_enabled` - boolean - True for enabling the alertmanager, via systemctl
@@ -41,9 +41,13 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
 - `prometheus` - Configure scrape files, alert rules, and alert templates
 - `prometheus_postgresql_archive` - boolean - If true the postgresql adapter will be installed
   - Default: `false`
+- `prometheus_postgresql_adapter_host` - The host that the adapter will be running on, how Prometheus will find it
+  - Default: `localhost`
 - `prometheus_postgresql_database` - Database that the adapter will use
   - Default: `metrics`
 - `prometheus_postgresql_username` - User that the adapter will connect as
+  - Default: `prometheus`
+- `prometheus_postgresql_password` - Password that the adapter will connect with
   - Default: `prometheus`
 
 ## Dependencies
