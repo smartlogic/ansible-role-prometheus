@@ -7,7 +7,7 @@ Set up common prometheus configurations
 ```
 - src: git+git@github.com:smartlogic/ansible-role-prometheus
   name: prometheus
-  version: 0.5.0
+  version: 0.6.1
 ```
 
 ## Requirements
