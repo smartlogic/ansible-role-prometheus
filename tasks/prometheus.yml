@@ -115,18 +115,20 @@
   copy:
     src: "{{ item }}"
     dest: "/home/prometheus/file_configs/"
+    owner: prometheus
+    group: prometheus
     mode: 0600
   become: true
-  become_user: prometheus
   with_items: "{{ prometheus.jobs }}"
 
 - name: Create rules files
   copy:
     src: "{{ item }}"
     dest: "/home/prometheus/rule_files/"
+    owner: prometheus
+    group: prometheus
     mode: 0600
   become: true
-  become_user: prometheus
   notify: restart prometheus
   with_items: "{{ prometheus.alert.rules }}"
 
@@ -134,8 +136,9 @@
   copy:
     src: "{{ item }}"
     dest: "/home/prometheus/alert_templates"
+    owner: prometheus
+    group: prometheus
     mode: 0600
   become: true
-  become_user: prometheus
   notify: restart prometheus
   with_items: "{{ prometheus.alert.templates }}"
