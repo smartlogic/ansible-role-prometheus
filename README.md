@@ -32,6 +32,8 @@ If enabled, this will set up two PostgreSQL extensions: [pg_prometheus][pg_prome
   - Default: `grafana.ini`
 - `grafana_state` - The state of the apt package for grafana (present|latest)
   - Default: `present`
+- `grafana_provisioning_directory` - The path to a directory containing Grafana provisioning yml files, for example `"{{ playbook_dir }}/files/{{ release_env }}/grafana-provisioning/"`. The trailing slash behaves similarly to that in `rsync`. See https://grafana.com/docs/grafana/latest/administration/provisioning/ for more info.
+  - Default: `false`
 - `prometheus_config_file` - The file to use for `prometheus.yml`
   - Default: `prometheus.yml.j2`
 - `prometheus_alert_file` - The file to use for `alertmanager.yml`

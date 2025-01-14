@@ -57,6 +57,17 @@
     - reload systemd
     - restart grafana
 
+- name: Copy out any grafana provisioning config
+  when: grafana_provisioning_directory
+  copy:
+    src: "{{ grafana_provisioning_directory }}"
+    dest: /etc/grafana/provisioning/
+    mode: 0640
+  become: true
+  notify:
+    - reload systemd
+    - restart grafana
+
 - name: Enable grafana
   systemd:
     enabled: yes

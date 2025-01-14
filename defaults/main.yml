@@ -10,6 +10,7 @@ prometheus_postgres_adapter_checksum: "a3ea162175fb385f993cb1b48a2ca84b569f6a265
 
 grafana_ini_file: grafana.ini
 grafana_state: present
+grafana_provisioning_directory: false
 prometheus_config_file: prometheus.yml.j2
 prometheus_alert_file: alertmanager.yml
 alertmanager_enabled: true
